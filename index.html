@@ -5,26 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
     <style>
         * {
             margin: 0;
         }
         html, body {
             height: 100%;
-        }
-        #canvas {
-            /*background-color: #000;*/
+            overflow-x: hidden;
         }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
-<!--    <script src="js/index.js"></script>-->
-<!--    <script src="js/moving.js"></script>-->
-<!--    <script src="js/circular.js"></script>-->
-<!--    <script src="js/sine.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5.1/dat.gui.min.js"></script>
-    <script src="js/waves.js"></script>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const c = canvas.getContext('2d');
+        const gui = new dat.GUI();
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const wave = {
+            y: canvas.height / 2,
+            length: 0.004,
+            amplitude: 100,
+            frequency: 0.01,
+            color: 62,
+            fill: '#259278',
+            stops: ['#327f6a', '#33806b', '#2f7b68', '#3e8d75']
+        }
+
+        let inc = wave.frequency;
+
+        const func = {
+            inc: inc,
+            amp: wave.amplitude
+        }
+        const gr = gui.addFolder('curv');
+        gr.add(func, 'inc', -100, 200);
+        gr.add(func, 'amp', -100, 1000);
+        gr.open();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            c.beginPath();
+            c.moveTo(0, 0);
+            for (let i = 0; i < canvas.width; i++) {
+                c.lineTo(i, wave.y + Math.sin(i * wave.length + inc + Math.sin((i + func.inc * Math.cos(i * wave.length + inc)) / func.amp)/3) * wave.amplitude)
+            }
+            c.stroke();
+
+            inc += wave.frequency;
+        }
+
+        animate();
+    </script>
 </body>
 </html>

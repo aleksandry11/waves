@@ -1,2 +1,3 @@
-# waves
 node_modules
+.ds_store
+*.todo
