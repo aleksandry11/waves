@@ -8,7 +8,7 @@ class Gradient {
     }
 
     addStop(pos, colors) {
-        const stop = {pos: pos, colors: colors, currentColor: null}
+        const stop = { pos: pos, colors: colors, currentColor: null }
         this.colorStops.push(stop);
     }
 
@@ -33,7 +33,7 @@ class Gradient {
             g = Math.floor(lerp(startColor.g, endColor.g, Anim.currentUnit));
             b = Math.floor(lerp(startColor.b, endColor.b, Anim.currentUnit));
 
-            stop.currentColor = `${r}, ${g}, ${b}`;
+            stop.currentColor = `rgb(${r}, ${g}, ${b})`;
         }
 
         // update current stop and animation units if interpolation is complete
@@ -55,20 +55,20 @@ class Gradient {
             let stop = this.colorStops[i],
                 pos = stop.pos,
                 color = stop.currentColor;
-            gradient.addColorStop(pos, 'rgb(' + color + ')');
+            gradient.addColorStop(pos, color);
         }
 
         // this.c.clearRect(0, 0, this.width, this.height);
         this.c.fillStyle = gradient;
         // this.c.fillRect(0, 0, this.width, this.height);
-        this.c.fill();  
+        this.c.fill();
     }
 }
 
 const Anim = {
-    duration: 6000,
-    interval: 0.5,
-    stepUnit: 1.0,
+    duration: 3000,
+    interval: 10,
+    stepUnit: 0.5,
     currentUnit: 0.0
 }
 

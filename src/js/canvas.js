@@ -1,7 +1,6 @@
-import * as dat from 'dat.gui';
 import Gradient from './Gradient';
-import { waves } from './config';
 import GuiHelper from './gui';
+import { waves } from './config';
 
 const canvas = document.getElementById('canvas');
 const c = canvas.getContext('2d');
@@ -19,42 +18,53 @@ for (let wave of waves) {
 
 c.translate(canvas.width / 2, canvas.height / 2);
 c.rotate(45 * Math.PI / 180);
-c.translate(-200, -200);
+c.translate(-210, -200);
 c.translate(-canvas.width / 2, -canvas.height / 2,);
 c.translate(340, -340);
 
-let gradient = new Gradient(c, canvas.width, canvas.height);
+// let gradient = new Gradient(c, canvas.width, canvas.height);
+let gradients = [];
 
+for (let i = 0; i < waves.length; i++) {
+    let gradient = new Gradient(c, canvas.width, canvas.height);
+    gradient.addStop(0, waves[i].stopsA);
+    gradient.addStop(1, waves[i].stopsB);
+    gradients.push(gradient);
+}
 function animate() {
     requestAnimationFrame(animate);
     // c.fillStyle = 'rgba(204, 108, 88, .8)';
     // c.fillRect(0, 0, canvas.width, canvas.height);
     c.clearRect(0, 0, canvas.width, canvas.height);
-    
 
     for (let j = 0; j < waves.length; j++) {
-        gradient.addStop(0, waves[j].stopsA);
-        gradient.addStop(1, waves[j].stopsB);
         if (j === 3) continue;
+
         c.beginPath();
         c.moveTo(0, canvas.height / 2);
 
         for (let i = 0; i < canvas.width; i++) {
+            let func = i * waves[j].length;
+            let funcByCurve = func / waves[j].curveIndex;
+            let mainPattern = Math.sin(func + increments[j]) / Math.PI * waves[j].curveIndex * waves[j].amplitude - waves[j].lean;
+
             c.lineTo(i,
-                waves[j].y + (Math.sin(i * waves[j].length + increments[j]) + Math.sin((i + increments[j] * Math.cos(i * waves[j].length + increments[j])) / waves[j].amplitude)/waves[j].curveIndex) * waves[j].amplitude * Math.sin(increments[j]) - i / waves[j].lean
-                // (Math.sin(func.sin * func.multiplier * waves[j].length + increments[j]) * Math.sin(increments[j])) / 10
+                waves[j].y + mainPattern * Math.sin(funcByCurve) * Math.sin(funcByCurve * waves[j].curveIndex2)
             );
         }
         if (j === 2) {
             for (let i = canvas.width; i > 0; i--) {
+                let func = i * waves[j + 1].length;
+                let funcByCurve = func / waves[j + 1].curveIndex;
+                let mainPattern = Math.sin(func + increments[j + 1]) / Math.PI * waves[j + 1].curveIndex * waves[j + 1].amplitude - i / waves[j + 1].lean;
                 c.lineTo(i,
-                    waves[j + 1].y + Math.sin(i * waves[j + 1].length + increments[j + 1]) * waves[j + 1].amplitude * Math.sin(increments[j + 1]) - i / waves[j + 1].lean
+                    waves[j + 1].y + mainPattern * Math.sin(funcByCurve) * Math.sin(funcByCurve * waves[j + 1].curveIndex2)
                 );
             }
-            c.shadowBlur = 40;
-            c.shadowOffsetX = 5;
-            c.shadowOffsetY = 5;
-            c.shadowColor = 'rgba(0, 0, 0, .3)';
+            // c.shadowBlur = 10;
+            // c.shadowOffsetX = 5;
+            // c.shadowOffsetY = 5;
+            // c.shadowColor = 'rgba(0, 0, 0, .3)';
             // c.shadowColor = `rgba(35, 21, 167, ${Math.abs(Math.sin(increments[j]))})`;
         } else {
             c.lineTo(canvas.width, 0);
@@ -78,17 +88,12 @@ function animate() {
         // gradient.addStop(1, stopBColor);
         // gradient.draw();
         // c.fill();
-        gradient.updateStops();
-
-    gradient.draw();
-       
+        gradients[j].updateStops();
+        gradients[j].draw();
     }
-
-
     for (let i = 0; i < waves.length; i++) {
         increments[i] += waves[i].frequency;
     }
-
 }
 
 animate();

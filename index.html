@@ -30,7 +30,7 @@
             length: 0.004,
             amplitude: 100,
             frequency: 0.01,
-            color: 62,
+            color: 102,
             fill: '#259278',
             stops: ['#327f6a', '#33806b', '#2f7b68', '#3e8d75']
         }
@@ -52,7 +52,7 @@
             c.beginPath();
             c.moveTo(0, 0);
             for (let i = 0; i < canvas.width; i++) {
-                c.lineTo(i, wave.y + Math.sin(i * wave.length + inc + Math.sin((i + func.inc * Math.cos(i * wave.length + inc)) / func.amp)/3) * wave.amplitude)
+                c.lineTo(i, wave.y + Math.pow((Math.sin(i * wave.length + inc + Math.sin((i + func.inc * Math.cos(i * wave.length + inc)) / func.amp)/3) * wave.amplitude), 2))
             }
             c.stroke();
 

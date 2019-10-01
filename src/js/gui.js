@@ -1,18 +1,20 @@
 import * as dat from 'dat.gui';
 
+const gui = new dat.GUI();
+
 export default class GuiHelper {
     static create(config) {
-        const gui = new dat.GUI();
         let folders = [];
 
         for (let i = 0; i < config.length; i++) {
             let folder = gui.addFolder(`Wave ${i + 1}`);
             folder.add(config[i], 'y', 0, canvas.height);
-            folder.add(config[i], 'length', -0.3, 0.1);
-            folder.add(config[i], 'amplitude', -300, 300);
+            folder.add(config[i], 'length', 0.0001, 0.05);
+            folder.add(config[i], 'amplitude', 0, 200);
             folder.add(config[i], 'frequency', 0.001, 1);
-            folder.add(config[i], 'lean', -30, 300);
-            folder.add(config[i], 'curveIndex', -100, 100);
+            folder.add(config[i], 'lean', 0.001, 500);
+            folder.add(config[i], 'curveIndex', -0.001, 30);
+            folder.add(config[i], 'curveIndex2', -0.001, 30);
         
             const colorStop1 = folder.addFolder('Color Stop 1');
             GuiHelper.addColorStops(colorStop1, config[i].stopsA);

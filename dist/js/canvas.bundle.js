@@ -2657,13 +2657,13 @@ var Gradient = function () {
     }
 
     _createClass(Gradient, [{
-        key: 'addStop',
+        key: "addStop",
         value: function addStop(pos, colors) {
             var stop = { pos: pos, colors: colors, currentColor: null };
             this.colorStops.push(stop);
         }
     }, {
-        key: 'updateStops',
+        key: "updateStops",
         value: function updateStops() {
             var steps = Anim.duration / Anim.interval,
                 step_u = Anim.stepUnit / steps,
@@ -2689,7 +2689,7 @@ var Gradient = function () {
                 g = Math.floor(lerp(startColor.g, endColor.g, Anim.currentUnit));
                 b = Math.floor(lerp(startColor.b, endColor.b, Anim.currentUnit));
 
-                stop.currentColor = r + ', ' + g + ', ' + b;
+                stop.currentColor = "rgb(" + r + ", " + g + ", " + b + ")";
             }
 
             // update current stop and animation units if interpolation is complete
@@ -2705,14 +2705,14 @@ var Gradient = function () {
             Anim.currentUnit += step_u; // increment animation unit
         }
     }, {
-        key: 'draw',
+        key: "draw",
         value: function draw() {
             var gradient = this.c.createLinearGradient(0, 0, this.width, this.height);
             for (var i = 0; i < this.colorStops.length; i++) {
                 var stop = this.colorStops[i],
                     pos = stop.pos,
                     color = stop.currentColor;
-                gradient.addColorStop(pos, 'rgb(' + color + ')');
+                gradient.addColorStop(pos, color);
             }
 
             // this.c.clearRect(0, 0, this.width, this.height);
@@ -2726,9 +2726,9 @@ var Gradient = function () {
 }();
 
 var Anim = {
-    duration: 6000,
-    interval: 0.5,
-    stepUnit: 1.0,
+    duration: 3000,
+    interval: 10,
+    stepUnit: 0.5,
     currentUnit: 0.0
 };
 
@@ -2750,23 +2750,17 @@ exports.default = Gradient;
 "use strict";
 
 
-var _dat = __webpack_require__(/*! dat.gui */ "./node_modules/dat.gui/build/dat.gui.module.js");
-
-var dat = _interopRequireWildcard(_dat);
-
 var _Gradient = __webpack_require__(/*! ./Gradient */ "./src/js/Gradient.js");
 
 var _Gradient2 = _interopRequireDefault(_Gradient);
-
-var _config = __webpack_require__(/*! ./config */ "./src/js/config.js");
 
 var _gui = __webpack_require__(/*! ./gui */ "./src/js/gui.js");
 
 var _gui2 = _interopRequireDefault(_gui);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _config = __webpack_require__(/*! ./config */ "./src/js/config.js");
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var canvas = document.getElementById('canvas');
 var c = canvas.getContext('2d');
@@ -2805,12 +2799,19 @@ try {
 
 c.translate(canvas.width / 2, canvas.height / 2);
 c.rotate(45 * Math.PI / 180);
-c.translate(-200, -200);
+c.translate(-210, -200);
 c.translate(-canvas.width / 2, -canvas.height / 2);
 c.translate(340, -340);
 
-var gradient = new _Gradient2.default(c, canvas.width, canvas.height);
+// let gradient = new Gradient(c, canvas.width, canvas.height);
+var gradients = [];
 
+for (var i = 0; i < _config.waves.length; i++) {
+    var gradient = new _Gradient2.default(c, canvas.width, canvas.height);
+    gradient.addStop(0, _config.waves[i].stopsA);
+    gradient.addStop(1, _config.waves[i].stopsB);
+    gradients.push(gradient);
+}
 function animate() {
     requestAnimationFrame(animate);
     // c.fillStyle = 'rgba(204, 108, 88, .8)';
@@ -2818,25 +2819,29 @@ function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
 
     for (var j = 0; j < _config.waves.length; j++) {
-        gradient.addStop(0, _config.waves[j].stopsA);
-        gradient.addStop(1, _config.waves[j].stopsB);
         if (j === 3) continue;
+
         c.beginPath();
         c.moveTo(0, canvas.height / 2);
 
-        for (var i = 0; i < canvas.width; i++) {
-            c.lineTo(i, _config.waves[j].y + (Math.sin(i * _config.waves[j].length + increments[j]) + Math.sin((i + increments[j] * Math.cos(i * _config.waves[j].length + increments[j])) / _config.waves[j].amplitude) / _config.waves[j].curveIndex) * _config.waves[j].amplitude * Math.sin(increments[j]) - i / _config.waves[j].lean
-            // (Math.sin(func.sin * func.multiplier * waves[j].length + increments[j]) * Math.sin(increments[j])) / 10
-            );
+        for (var _i = 0; _i < canvas.width; _i++) {
+            var func = _i * _config.waves[j].length;
+            var funcByCurve = func / _config.waves[j].curveIndex;
+            var mainPattern = Math.sin(func + increments[j]) / Math.PI * _config.waves[j].curveIndex * _config.waves[j].amplitude - _config.waves[j].lean;
+
+            c.lineTo(_i, _config.waves[j].y + mainPattern * Math.sin(funcByCurve) * Math.sin(funcByCurve * _config.waves[j].curveIndex2));
         }
         if (j === 2) {
-            for (var _i = canvas.width; _i > 0; _i--) {
-                c.lineTo(_i, _config.waves[j + 1].y + Math.sin(_i * _config.waves[j + 1].length + increments[j + 1]) * _config.waves[j + 1].amplitude * Math.sin(increments[j + 1]) - _i / _config.waves[j + 1].lean);
+            for (var _i2 = canvas.width; _i2 > 0; _i2--) {
+                var _func = _i2 * _config.waves[j + 1].length;
+                var _funcByCurve = _func / _config.waves[j + 1].curveIndex;
+                var _mainPattern = Math.sin(_func + increments[j + 1]) / Math.PI * _config.waves[j + 1].curveIndex * _config.waves[j + 1].amplitude - _i2 / _config.waves[j + 1].lean;
+                c.lineTo(_i2, _config.waves[j + 1].y + _mainPattern * Math.sin(_funcByCurve) * Math.sin(_funcByCurve * _config.waves[j + 1].curveIndex2));
             }
-            c.shadowBlur = 40;
-            c.shadowOffsetX = 5;
-            c.shadowOffsetY = 5;
-            c.shadowColor = 'rgba(0, 0, 0, .3)';
+            // c.shadowBlur = 10;
+            // c.shadowOffsetX = 5;
+            // c.shadowOffsetY = 5;
+            // c.shadowColor = 'rgba(0, 0, 0, .3)';
             // c.shadowColor = `rgba(35, 21, 167, ${Math.abs(Math.sin(increments[j]))})`;
         } else {
             c.lineTo(canvas.width, 0);
@@ -2860,13 +2865,11 @@ function animate() {
         // gradient.addStop(1, stopBColor);
         // gradient.draw();
         // c.fill();
-        gradient.updateStops();
-
-        gradient.draw();
+        gradients[j].updateStops();
+        gradients[j].draw();
     }
-
-    for (var _i2 = 0; _i2 < _config.waves.length; _i2++) {
-        increments[_i2] += _config.waves[_i2].frequency;
+    for (var _i3 = 0; _i3 < _config.waves.length; _i3++) {
+        increments[_i3] += _config.waves[_i3].frequency;
     }
 }
 
@@ -2896,63 +2899,67 @@ var waves = exports.waves = [{
     color: 62,
     fill: '#259278',
     curveIndex: 10,
+    curveIndex2: 3,
     stopsA: [{ r: 36, g: 29, b: 166 }, //blue
     { r: 207, g: 18, b: 125 }, //green
     { r: 102, g: 27, b: 188 }, //yellow
     { r: 14, g: 82, b: 65 //red
     }],
-    stopsB: [{ r: 136, g: 209, b: 166 }, //blue
-    { r: 207, g: 18, b: 125 }, //green
+    stopsB: [{ r: 207, g: 18, b: 125 }, //green
+    { r: 136, g: 209, b: 166 }, //blue
     { r: 102, g: 27, b: 188 }, //yellow
     { r: 14, g: 82, b: 65 //red
     }]
 }, {
-    y: 759,
-    length: 0.003,
-    amplitude: 163,
-    frequency: 0.001,
-    lean: 21,
+    y: 769,
+    length: 0.016,
+    amplitude: 3,
+    frequency: 0.036,
+    lean: 117,
     color: 0,
     fill: '#1d8173',
-    curveIndex: 10,
+    curveIndex: 19,
+    curveIndex2: 9,
     stopsA: [{ r: 0, g: 92, b: 69 }, //blue
     { r: 102, g: 217, b: 188 }, //yellow
     { r: 27, g: 158, b: 125 }, //green
     { r: 14, g: 82, b: 65 //red
     }],
-    stopsB: [{ r: 0, g: 92, b: 69 }, //blue
-    { r: 102, g: 217, b: 188 }, //yellow
+    stopsB: [{ r: 102, g: 217, b: 188 }, //yellow
+    { r: 0, g: 92, b: 69 }, //blue
     { r: 27, g: 158, b: 125 }, //green
     { r: 14, g: 82, b: 65 //red
     }]
 }, {
     y: 844,
     length: 0.009,
-    amplitude: 43,
-    frequency: 0.001,
-    lean: 2.9,
+    amplitude: 12,
+    frequency: 0.013,
+    lean: 450,
     color: 208,
     fill: '#23d2a7',
-    curveIndex: 10,
+    curveIndex: 12,
+    curveIndex2: 3,
     stopsA: [{ r: 36, g: 209, b: 166 }, //blue
     { r: 27, g: 158, b: 125 }, //green
     { r: 102, g: 217, b: 188 }, //yellow
     { r: 14, g: 82, b: 65 //red
     }],
-    stopsB: [{ r: 0, g: 92, b: 69 }, //blue
-    { r: 102, g: 217, b: 188 }, //yellow
+    stopsB: [{ r: 102, g: 217, b: 188 }, //yellow
+    { r: 0, g: 92, b: 69 }, //blue
     { r: 27, g: 158, b: 125 }, //green
     { r: 14, g: 82, b: 65 //red
     }]
 }, {
-    y: 695,
+    y: 652,
     length: 0.01,
-    amplitude: 57,
-    frequency: 0.003,
-    lean: 2.4,
+    amplitude: 12,
+    frequency: 0.006,
+    lean: 1.3,
     color: 132,
     fill: "#178b6f",
-    curveIndex: 10,
+    curveIndex: 12,
+    curveIndex2: 3,
     stopsA: [{ r: 36, g: 209, b: 166 }, //blue
     { r: 27, g: 158, b: 125 }, //green
     { r: 102, g: 217, b: 188 }, //yellow
@@ -2991,6 +2998,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var gui = new dat.GUI();
+
 var GuiHelper = function () {
     function GuiHelper() {
         _classCallCheck(this, GuiHelper);
@@ -2999,17 +3008,17 @@ var GuiHelper = function () {
     _createClass(GuiHelper, null, [{
         key: 'create',
         value: function create(config) {
-            var gui = new dat.GUI();
             var folders = [];
 
             for (var i = 0; i < config.length; i++) {
                 var folder = gui.addFolder('Wave ' + (i + 1));
                 folder.add(config[i], 'y', 0, canvas.height);
-                folder.add(config[i], 'length', -0.3, 0.1);
-                folder.add(config[i], 'amplitude', -300, 300);
+                folder.add(config[i], 'length', 0.0001, 0.05);
+                folder.add(config[i], 'amplitude', 0, 200);
                 folder.add(config[i], 'frequency', 0.001, 1);
-                folder.add(config[i], 'lean', -30, 300);
-                folder.add(config[i], 'curveIndex', -100, 100);
+                folder.add(config[i], 'lean', 0.001, 500);
+                folder.add(config[i], 'curveIndex', -0.001, 30);
+                folder.add(config[i], 'curveIndex2', -0.001, 30);
 
                 var colorStop1 = folder.addFolder('Color Stop 1');
                 GuiHelper.addColorStops(colorStop1, config[i].stopsA);

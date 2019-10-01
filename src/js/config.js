@@ -8,6 +8,7 @@ export const waves = [
         color: 62,
         fill: '#259278',
         curveIndex: 10,
+        curveIndex2: 3,
         stopsA: [
             { r: 36, g: 29, b:166 }, //blue
             { r: 207, g: 18, b: 125 }, //green
@@ -15,21 +16,22 @@ export const waves = [
             { r: 14, g: 82, b: 65 } //red
         ],
         stopsB: [
-            { r: 136, g: 209, b:166 }, //blue
             { r: 207, g: 18, b: 125 }, //green
+            { r: 136, g: 209, b:166 }, //blue
             { r: 102, g: 27, b: 188 }, //yellow
             { r: 14, g: 82, b: 65 } //red
         ],
     },
     {
-        y: 759,
-        length: 0.003,
-        amplitude: 163,
-        frequency: 0.001,
-        lean: 21,
+        y: 769,
+        length: 0.016,
+        amplitude: 3,
+        frequency: 0.036,
+        lean: 117,
         color: 0,
         fill: '#1d8173',
-        curveIndex: 10,
+        curveIndex: 19,
+        curveIndex2: 9,
         stopsA: [
             { r: 0, g: 92, b: 69 }, //blue
             { r: 102, g: 217, b: 188 }, //yellow
@@ -37,8 +39,8 @@ export const waves = [
             { r: 14, g: 82, b: 65 } //red
         ],
         stopsB: [
-            { r: 0, g: 92, b: 69 }, //blue
             { r: 102, g: 217, b: 188 }, //yellow
+            { r: 0, g: 92, b: 69 }, //blue
             { r: 27, g: 158, b: 125 }, //green
             { r: 14, g: 82, b: 65 } //red
         ]
@@ -46,12 +48,13 @@ export const waves = [
     {
         y: 844,
         length: 0.009,
-        amplitude: 43,
-        frequency: 0.001,
-        lean: 2.9,
+        amplitude: 12,
+        frequency: 0.013,
+        lean: 450,
         color: 208,
         fill: '#23d2a7',
-        curveIndex: 10,
+        curveIndex: 12,
+        curveIndex2: 3,
         stopsA: [
             { r: 36, g: 209, b:166 }, //blue
             { r: 27, g: 158, b: 125 }, //green
@@ -59,21 +62,22 @@ export const waves = [
             { r: 14, g: 82, b: 65 } //red
         ],
         stopsB: [
-            { r: 0, g: 92, b: 69 }, //blue
             { r: 102, g: 217, b: 188 }, //yellow
+            { r: 0, g: 92, b: 69 }, //blue
             { r: 27, g: 158, b: 125 }, //green
             { r: 14, g: 82, b: 65 } //red
         ]
     },
     {
-        y: 695,
+        y: 652,
         length: 0.01,
-        amplitude: 57,
-        frequency: 0.003,
-        lean: 2.4,
+        amplitude: 12,
+        frequency: 0.006,
+        lean: 1.3,
         color: 132,
         fill: "#178b6f",
-        curveIndex: 10,
+        curveIndex: 12,
+        curveIndex2: 3,
         stopsA: [
             { r: 36, g: 209, b:166 }, //blue
             { r: 27, g: 158, b: 125 }, //green
