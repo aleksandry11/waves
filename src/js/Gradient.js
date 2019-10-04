@@ -50,14 +50,13 @@ class Gradient {
     }
 
     draw() {
-        const gradient = this.c.createLinearGradient(0, 0, this.width, this.height);
+        const gradient = this.c.createLinearGradient(this.width, this.height / 2, 0, 0);
         for (let i = 0; i < this.colorStops.length; i++) {
             let stop = this.colorStops[i],
                 pos = stop.pos,
                 color = stop.currentColor;
             gradient.addColorStop(pos, color);
         }
-
         // this.c.clearRect(0, 0, this.width, this.height);
         this.c.fillStyle = gradient;
         // this.c.fillRect(0, 0, this.width, this.height);
@@ -68,7 +67,7 @@ class Gradient {
 const Anim = {
     duration: 3000,
     interval: 10,
-    stepUnit: 0.5,
+    stepUnit: 1.0,
     currentUnit: 0.0
 }
 

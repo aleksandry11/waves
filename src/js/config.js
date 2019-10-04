@@ -1,95 +1,81 @@
 export const waves = [
     {
-        y: 620,
-        length: 0.004,
-        amplitude: -154,
-        frequency: 0.001,
-        lean: -15,
-        color: 62,
-        fill: '#259278',
-        curveIndex: 10,
-        curveIndex2: 3,
-        stopsA: [
-            { r: 36, g: 29, b:166 }, //blue
-            { r: 207, g: 18, b: 125 }, //green
-            { r: 102, g: 27, b: 188 }, //yellow
-            { r: 14, g: 82, b: 65 } //red
+        y: 282,
+        length: 0.0018,
+        amplitude: 2,
+        frequency: 0.003,
+        lean: 183,
+        curveIndex: 6.2,
+        curveIndex2: 12,
+        incline: 3,
+        stops: [
+            { r: 36, g: 127, b: 106 },
+            { r: 17, g: 122, b: 103 },
+            { r: 26, g: 167, b: 126 },
+            { r: 27, g: 122, b: 103 },
         ],
-        stopsB: [
-            { r: 207, g: 18, b: 125 }, //green
-            { r: 136, g: 209, b:166 }, //blue
-            { r: 102, g: 27, b: 188 }, //yellow
-            { r: 14, g: 82, b: 65 } //red
-        ],
+        gradientPath: [0.5, 0, 0.5, 0],
+        definingFunctions: [Math.cos, Math.cos]
     },
     {
-        y: 769,
-        length: 0.016,
-        amplitude: 3,
-        frequency: 0.036,
-        lean: 117,
-        color: 0,
-        fill: '#1d8173',
-        curveIndex: 19,
-        curveIndex2: 9,
-        stopsA: [
-            { r: 0, g: 92, b: 69 }, //blue
-            { r: 102, g: 217, b: 188 }, //yellow
-            { r: 27, g: 158, b: 125 }, //green
-            { r: 14, g: 82, b: 65 } //red
+        y: 560,
+        length: 0.014,
+        amplitude: 9.1,
+        frequency: 0.0077,
+        lean: 204,
+        curveIndex: 5.7,
+        curveIndex2: 2.25,
+        incline: 5,
+        stops: [
+            { r: 36, g: 132, b: 109 },
+            { r: 17, g: 117, b: 98 },
+            { r: 35, g: 164, b: 131 },
+            { r: 36, g: 189, b: 119 }
         ],
-        stopsB: [
-            { r: 102, g: 217, b: 188 }, //yellow
-            { r: 0, g: 92, b: 69 }, //blue
-            { r: 27, g: 158, b: 125 }, //green
-            { r: 14, g: 82, b: 65 } //red
-        ]
+        gradientPath: [0, 0.2, 1, 3],
+        definingFunctions: [Math.cos, Math.sin],
+        useAdditionForDefiningFunctions: true
     },
     {
-        y: 844,
-        length: 0.009,
-        amplitude: 12,
-        frequency: 0.013,
-        lean: 450,
-        color: 208,
-        fill: '#23d2a7',
-        curveIndex: 12,
-        curveIndex2: 3,
-        stopsA: [
-            { r: 36, g: 209, b:166 }, //blue
-            { r: 27, g: 158, b: 125 }, //green
-            { r: 102, g: 217, b: 188 }, //yellow
-            { r: 14, g: 82, b: 65 } //red
+        y: 582,
+        length: 0.0041,
+        amplitude: 5,
+        frequency: 0.0041,
+        lean: 64,
+        curveIndex: 9,
+        curveIndex2: 20,
+        incline: 25,
+        stops: [
+            { r: 60, g: 177, b: 143 },
+            { r: 60, g: 157, b: 133 },
+            { r: 36, g: 200, b: 160 },
+            { r: 35, g: 210, b: 168 },
         ],
-        stopsB: [
-            { r: 102, g: 217, b: 188 }, //yellow
-            { r: 0, g: 92, b: 69 }, //blue
-            { r: 27, g: 158, b: 125 }, //green
-            { r: 14, g: 82, b: 65 } //red
-        ]
+        gradientPath: [1, 0.1, 0.2, 1],
+        definingFunctions: [Math.sin, Math.cos]
     },
     {
-        y: 652,
-        length: 0.01,
-        amplitude: 12,
-        frequency: 0.006,
-        lean: 1.3,
-        color: 132,
-        fill: "#178b6f",
-        curveIndex: 12,
-        curveIndex2: 3,
-        stopsA: [
-            { r: 36, g: 209, b:166 }, //blue
-            { r: 27, g: 158, b: 125 }, //green
-            { r: 102, g: 217, b: 188 }, //yellow
-            { r: 14, g: 82, b: 65 } //red
+        y: 498,
+        length: 0.006,
+        amplitude: 2,
+        frequency: 0.0172,
+        lean: 58.8,
+        curveIndex: 13,
+        curveIndex2: 26.9,
+        incline: -20,
+        stops: [
+            { r: 36, g: 209, b:166 },
+            { r: 27, g: 158, b: 125 },
+            { r: 102, g: 217, b: 188 },
+            { r: 14, g: 82, b: 65 }
         ],
-        stopsB: [
-            { r: 102, g: 217, b: 188 }, //yellow
-            { r: 0, g: 92, b: 69 }, //blue
-            { r: 27, g: 158, b: 125 }, //green
-            { r: 14, g: 82, b: 65 } //red
-        ]
+        definingFunctions: [Math.sin, Math.sin],
+        continuationPath: true
     },
 ];
 
+export const canvasConfig = {
+    x: 249,
+    y: -401,
+    deg: 21
+};

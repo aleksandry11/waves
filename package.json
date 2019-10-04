@@ -12,12 +12,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.6.2",
+    "babel-preset-stage-2": "^6.24.1",
     "dat.gui": "^0.7.6",
     "gsap": "^2.0.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.24.4",
     "browser-sync-webpack-plugin": "^2.2.2",
