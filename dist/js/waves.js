@@ -2861,15 +2861,17 @@ exports.default = Waves;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _Waves = __webpack_require__(/*! ./Waves */ "./src/js/Waves.js");
 
 var _Waves2 = _interopRequireDefault(_Waves);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var canvas = document.getElementById('canvas');
-
-var waves = new _Waves2.default(canvas);
+exports.default = { Waves: _Waves2.default };
 
 /***/ }),
 
