@@ -8,13 +8,13 @@ export const waves = [
         curveIndex: 6.2,
         curveIndex2: 12,
         incline: 3,
-        stops: [
-            { r: 36, g: 127, b: 106 },
-            { r: 17, g: 122, b: 103 },
-            { r: 26, g: 167, b: 126 },
-            { r: 27, g: 122, b: 103 },
-        ],
-        gradientPath: [0.5, 0, 0.5, 0],
+        stops: {
+            color0: [ 36, 127, 106],
+            color1: [ 17, 122, 103],
+            color2: [ 26, 167, 126],
+            color3: [ 27, 122, 103],
+        },
+        gradientPath: [0.5, 0, 0.5, 1],
         definingFunctions: [Math.cos, Math.cos]
     },
     {
@@ -26,12 +26,12 @@ export const waves = [
         curveIndex: 5.7,
         curveIndex2: 2.25,
         incline: 5,
-        stops: [
-            { r: 36, g: 132, b: 109 },
-            { r: 17, g: 117, b: 98 },
-            { r: 35, g: 164, b: 131 },
-            { r: 36, g: 189, b: 119 }
-        ],
+        stops: {
+            color0: [ 36, 132, 109],
+            color1: [ 17, 117, 98],
+            color2: [ 35, 164, 131],
+            color3: [ 36, 189, 119]
+        },
         gradientPath: [0, 0.2, 1, 3],
         definingFunctions: [Math.cos, Math.sin],
         useAdditionForDefiningFunctions: true
@@ -40,37 +40,38 @@ export const waves = [
         y: 582,
         length: 0.0041,
         amplitude: 5,
-        frequency: 0.0041,
+        frequency: 0.0081,
         lean: 64,
         curveIndex: 9,
         curveIndex2: 20,
         incline: 25,
-        stops: [
-            { r: 60, g: 177, b: 143 },
-            { r: 60, g: 157, b: 133 },
-            { r: 36, g: 200, b: 160 },
-            { r: 35, g: 210, b: 168 },
-        ],
+        stops: {
+            color0: [ 60, 177, 143],
+            color1: [ 60, 157, 133],
+            color2: [ 36, 200, 160],
+            color3: [ 35, 210, 168],
+        },
         gradientPath: [1, 0.1, 0.2, 1],
-        definingFunctions: [Math.sin, Math.cos]
+        definingFunctions: [Math.sin, Math.cos],
+        complexPathStart: true
     },
     {
         y: 498,
         length: 0.006,
         amplitude: 2,
-        frequency: 0.0172,
+        frequency: 0.0082,
         lean: 58.8,
         curveIndex: 13,
         curveIndex2: 26.9,
         incline: -20,
-        stops: [
-            { r: 36, g: 209, b:166 },
-            { r: 27, g: 158, b: 125 },
-            { r: 102, g: 217, b: 188 },
-            { r: 14, g: 82, b: 65 }
-        ],
+        stops: {
+            color0: [ 36, 209, 166],
+            color1: [ 27, 158, 125],
+            color2: [ 102, 217, 188],
+            color3: [ 14, 82, 65]
+        },
         definingFunctions: [Math.sin, Math.sin],
-        continuationPath: true
+        complexPathEnd: true,
     },
 ];
 

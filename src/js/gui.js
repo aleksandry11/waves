@@ -1,10 +1,9 @@
 import * as dat from 'dat.gui';
 import { canvasConfig } from './config';
 
-const gui = new dat.GUI();
-
 export default class GuiHelper {
-    static create(config) {
+    static open(config) {
+        const gui = new dat.GUI();
         let folders = [];
 
         for (let i = 0; i < config.length; i++) {
@@ -23,22 +22,19 @@ export default class GuiHelper {
             folders.push(folder);
         }
 
-        let canvasFolder = GuiHelper.createCanvasSettings(canvasConfig);
+        let canvasFolder = GuiHelper.createCanvasSettings(gui, canvasConfig);
         folders.push(canvasFolder);
         
         return folders;
     }
 
-    static addColorStops(folder, array) {
-        for (let i = 0; i < 4; i++) {
-            let stop = folder.addFolder(`Color ${i + 1}`);
-            stop.add(array[i], 'r', 0, 255);
-            stop.add(array[i], 'g', 0, 255);
-            stop.add(array[i], 'b', 0, 255);
+    static addColorStops(folder, obj) {
+        for (let i = 1; i < 4; i++) {
+            folder.addColor(obj, `color${i}`);
         }
     }
 
-    static createCanvasSettings(config) {
+    static createCanvasSettings(gui, config) {
         let folder = gui.addFolder('Canvas');
         folder.add(config, 'x', -1000, 1000);
         folder.add(config, 'y', -1000, 1000);

@@ -1,8 +1,9 @@
 import { waves, canvasConfig } from "./config";
 import Wave from "./Wave";
+import GuiHelper from "./gui";
 
 export default class Waves {
-    constructor(canvas) {
+    constructor(canvas, useGui = false) {
         this.canvas = canvas;
         this.c = this.canvas.getContext('2d');
         this.applySettings();
@@ -11,6 +12,10 @@ export default class Waves {
 
         this.launch = this.launch.bind(this);
         this.launch();
+
+        if (useGui) {
+            GuiHelper.open(waves);
+        }
     }
 
     launch() {
@@ -22,16 +27,8 @@ export default class Waves {
         this.c.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         for (let i = 0; i < this.waves.length; i++) {
-            if (i === 3) {
-                this.waves[i].inc += this.waves[i].config.frequency;
-                break;
-            }
             this.waves[i].draw();
-            if (i === 2) {
-                this.waves[i + 1].draw();
-            }
         }
-
     }
 
     createWaves() {

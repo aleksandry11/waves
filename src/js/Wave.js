@@ -9,25 +9,26 @@ export default class Wave {
     }
 
     draw() {
-        this.c.beginPath();
-
-        if (this.config.hasOwnProperty('continuationPath') && this.config.continuationPath) {
+        if (this.config.hasOwnProperty('complexPathEnd') && this.config.complexPathEnd) {
             for (let i = this.width; i > 0; i--) {
                 this.c.lineTo(i, this.config.y + this.getFormula(i));
             }
+            this.fill();
         } else {
+            this.c.beginPath();
             for (let i = 0; i < this.width; i++) {
                 this.c.lineTo(i, this.config.y + this.getFormula(i));
             }
 
-            this.c.lineTo(this.width, 0);
-            this.c.lineTo(0, 0);
-
+            if (!this.config.hasOwnProperty('complexPathStart')) {
+                this.c.lineTo(this.width, 0);
+                this.c.lineTo(0, 0);
+                this.fill();
+            }
         }
-
-        this.fill();
         this.inc += this.config.frequency;
     }
+
     fill() {
         this.createShadow(40, 10, 10, 'rgba(10,90,54,0.3)');
         this.createGradient();
@@ -50,10 +51,10 @@ export default class Wave {
 
         const gr = this.c.createLinearGradient(x0, y0, x1, y1);
 
-        gr.addColorStop(0, this.createColor(this.config.stops[0]));
-        gr.addColorStop(0.25, this.createColor(this.config.stops[1]));
-        gr.addColorStop(0.5, this.createColor(this.config.stops[2]));
-        gr.addColorStop(1, this.createColor(this.config.stops[3]));
+        gr.addColorStop(0, this.createColor(this.config.stops.color0));
+        gr.addColorStop(0.25, this.createColor(this.config.stops.color1));
+        gr.addColorStop(0.5, this.createColor(this.config.stops.color2));
+        gr.addColorStop(1, this.createColor(this.config.stops.color3));
 
         this.c.fillStyle = gr;
     }
@@ -71,8 +72,8 @@ export default class Wave {
         return curve * this.math[0](funcByCurve) * this.math[1](funcByCurve * config.curveIndex2) + i / config.incline;
     }
 
-    createColor(colorObj) {
-        const { r, g, b } = colorObj;
+    createColor(colorArr) {
+        const [ r, g, b ] = colorArr;
         return `rgb(${r}, ${g + Math.sin(this.inc)}, ${b})`;
     }
 
