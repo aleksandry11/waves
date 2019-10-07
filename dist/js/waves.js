@@ -2871,7 +2871,11 @@ var _Waves2 = _interopRequireDefault(_Waves);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = { Waves: _Waves2.default };
+var canvas = document.getElementById('canvas');
+
+var waves = new _Waves2.default(canvas);
+
+exports.default = _Waves2.default;
 
 /***/ }),
 

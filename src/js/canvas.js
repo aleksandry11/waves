@@ -1,3 +1,7 @@
 import Waves from "./Waves";
 
-export default { Waves: Waves };
+const canvas = document.getElementById('canvas');
+
+const waves = new Waves(canvas);
+
+export default Waves;
