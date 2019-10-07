@@ -4,6 +4,7 @@ import { canvasConfig } from './config';
 export default class GuiHelper {
     static open(config) {
         const gui = new dat.GUI();
+        GuiHelper.alignLeft();
         let folders = [];
 
         for (let i = 0; i < config.length; i++) {
@@ -40,5 +41,10 @@ export default class GuiHelper {
         folder.add(config, 'y', -1000, 1000);
         folder.add(config, 'deg', -360, 360);
         return folder;
+    }
+
+    static alignLeft() {
+        const gui = document.querySelector('.dg.a');
+        gui.style.float = 'left';
     }
 }

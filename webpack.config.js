@@ -6,7 +6,10 @@ module.exports = {
   entry: './src/js/canvas.js',
   output: {
     path: __dirname + '/dist/',
-    filename: './js/waves.js'
+    filename: './js/waves.js',
+    libraryTarget: "umd",
+    library: "Waves",
+    libraryExport: 'default'
   },
   module: {
     rules: [

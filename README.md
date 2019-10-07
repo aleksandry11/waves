@@ -15,9 +15,11 @@
 ## Usage
 
 ##### Html
-Create canvas
+Create canvas and include `waves.js`
 ```html
         <canvas></canvas>
+        
+        <script src="waves.js"></script>
 ```     
 ##### JS
 Instantiate `Waves` object, and pass selected canvas as first parameter.

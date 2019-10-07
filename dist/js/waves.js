@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["Waves"] = factory();
+	else
+		root["Waves"] = factory();
+})(window, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -2871,10 +2881,6 @@ var _Waves2 = _interopRequireDefault(_Waves);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var canvas = document.getElementById('canvas');
-
-var waves = new _Waves2.default(canvas);
-
 exports.default = _Waves2.default;
 
 /***/ }),
@@ -3007,6 +3013,7 @@ var GuiHelper = function () {
         key: 'open',
         value: function open(config) {
             var gui = new dat.GUI();
+            GuiHelper.alignLeft();
             var folders = [];
 
             for (var i = 0; i < config.length; i++) {
@@ -3046,6 +3053,12 @@ var GuiHelper = function () {
             folder.add(config, 'deg', -360, 360);
             return folder;
         }
+    }, {
+        key: 'alignLeft',
+        value: function alignLeft() {
+            var gui = document.querySelector('.dg.a');
+            gui.style.float = 'left';
+        }
     }]);
 
     return GuiHelper;
@@ -3055,5 +3068,6 @@ exports.default = GuiHelper;
 
 /***/ })
 
-/******/ });
+/******/ })["default"];
+});
 //# sourceMappingURL=waves.js.map
